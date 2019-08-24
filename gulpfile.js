@@ -14,8 +14,8 @@ var gulp = require('gulp'),
     imagemin = require('gulp-imagemin'),
     concat  = require('gulp-concat'),
     sourcemaps = require('gulp-sourcemaps'),
+    less = require('gulp-less'),
     clean = require('gulp-clean');
-
 
 //如果又其他端口开启服务，使用$ browser-sync start --proxy "http://localhost:3011/" 可以代理其他端口
 gulp.task('server', function() {
@@ -52,6 +52,11 @@ gulp.task('sass', function() {
         }))
         .pipe(gulp.dest('./public/css'))
 });
+gulp.task('less', function () {
+    gulp.src('./src/less/*.less') //多个文件以数组形式传入
+        .pipe(less())
+        .pipe(gulp.dest('./public/css'))
+});
 gulp.task('css', function() {
     gulp.src('./src/css/*.css')
         .pipe(gulp.dest('./public/css'))
@@ -83,7 +88,7 @@ gulp.task('image', function() {
         .pipe(gulp.dest('./public/image'))
 });
 
-gulp.task('release', ['sass','css', 'html','js','dist-js','image']);
+gulp.task('release', ['sass','less','css', 'html','js','dist-js','image']);
 
 gulp.task('watch', function() {
     gulp.watch('src/sass/*.scss', ['sass']); //监控scss文件
