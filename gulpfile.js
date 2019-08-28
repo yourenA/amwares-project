@@ -4,7 +4,7 @@
 var gulp = require('gulp'),
     connect = require('gulp-connect'),
     babel = require("gulp-babel"),
-    sass = require('gulp-ruby-sass'),
+    sass = require('gulp-sass'),
     postcss = require('gulp-postcss'),
     autoprefixer = require('autoprefixer'),
     uglify=require('gulp-uglify'),
@@ -17,6 +17,7 @@ var gulp = require('gulp'),
     less = require('gulp-less'),
     clean = require('gulp-clean');
 
+sass.compiler = require('node-sass');
 //如果又其他端口开启服务，使用$ browser-sync start --proxy "http://localhost:3011/" 可以代理其他端口
 gulp.task('server', function() {
     browserSync.init({
@@ -38,8 +39,8 @@ gulp.task('html', function() {
         .pipe(browserSync.reload({stream: true}));//自动刷新
 });
 gulp.task('sass', function() {
-    sass('./src/sass/*.scss')
-        .on('error', sass.logError)
+    gulp.src('./src/sass/*.scss')
+        .pipe(sass().on('error', sass.logError))
         .pipe(postcss([autoprefixer(['last 2 versions','iOS >= 7', 'Android >= 4.1'])]))
         .pipe(gulp.dest('./public/css'))
         .pipe(browserSync.reload({stream: true}))
@@ -56,6 +57,7 @@ gulp.task('less', function () {
     gulp.src('./src/less/*.less') //多个文件以数组形式传入
         .pipe(less())
         .pipe(gulp.dest('./public/css'))
+        .pipe(browserSync.reload({stream: true}))
 });
 gulp.task('css', function() {
     gulp.src('./src/css/*.css')
@@ -92,6 +94,7 @@ gulp.task('release', ['sass','less','css', 'html','js','dist-js','image']);
 
 gulp.task('watch', function() {
     gulp.watch('src/sass/*.scss', ['sass']); //监控scss文件
+    gulp.watch('src/less/*.less', ['less']); //监控scss文件
     gulp.watch('src/css/*.css', ['css']); //监控css文件
     gulp.watch(['src/*.html'], ['html']); //监控html文件
     gulp.watch(['src/js/*.js'], ['js']); //监控js文件
