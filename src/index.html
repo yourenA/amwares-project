@@ -7,81 +7,104 @@
     <link rel="stylesheet" href="./css/category.css">
 </head>
 <body>
-    <div class="container">
-        <div class="box">
-            <div class="box-title"><img src="./image/pipe.png" alt="">德化项目</div>
-            <div class="box-content" >
-                <a class="item" href="http://182.61.56.51:6013/user/login" target="_blank">德化前端页面(正式)</a>
-                <a class="item" href="http://182.61.56.51:6003/user/login" target="_blank">德化前端页面(测试)</a>
-                <a class="item" href="http://182.61.56.51:6002/user/login" target="_blank">MQTT管理平台</a>
-            </div>
-        </div>
-        <div class="box">
-            <div class="box-title"><img src="./image/water.png" alt="">水务系统</div>
-            <div class="box-content" id="water">
-            </div>
-        </div>
-        <div class="box">
-            <div class="box-title"><img src="./image/log.png" alt="">水务系统Log日志</div>
-            <div class="box-content" >
-                <a class="item" href="http://124.228.9.126:8000/9101/" target="_blank">衡阳Log日志页面(9101)</a>
-                <a class="item" href="http://120.76.229.53/9004/" target="_blank">其它Log日志页面(9004)</a>
-            </div>
-        </div>
-        <div class="box">
-            <div class="box-title"><img src="./image/famen.png" alt="">南方阀门</div>
-            <div class="box-content" >
-                <a class="item" href="http://182.61.56.51:5006/user/login/nffm" target="_blank">南方阀门数据平台</a>
-            </div>
-        </div>
-        <div class="box">
-            <div class="box-title"><img src="./image/lora.png" alt="">Lora平台</div>
-            <div class="box-content" >
-                <a class="item" href="http://182.61.56.51:6001/user/login/zh" target="_blank">珠华</a>
-                <a class="item" href="http://182.61.56.51:6001/user/login/amwares" target="_blank">辂轺测试</a>
-                <a class="item" href="http://182.61.56.51:6001/user/login/test" target="_blank">珠华测试</a>
-            </div>
+<div class="container">
+    <div class="box">
+        <div class="box-title"><img src="./image/pipe.png" alt="">德化项目</div>
+        <div class="box-content">
+            <a class="item" href="http://182.61.56.51:6013/user/login" target="_blank">德化前端页面(正式)</a>
+            <a class="item" href="http://182.61.56.51:6003/user/login" target="_blank">德化前端页面(测试)</a>
+            <a class="item" href="http://182.61.56.51:6002/user/login" target="_blank">MQTT管理平台</a>
         </div>
     </div>
+    <div class="box">
+        <div class="box-title"><img src="./image/water.png" alt="">水务系统</div>
+        <div class="box-content" id="water">
+        </div>
+    </div>
+    <div class="box">
+        <div class="box-title"><img src="./image/log.png" alt="">水务系统Log日志</div>
+        <div class="box-content">
+            <a class="item" href="http://124.228.9.126:8000/9101/" target="_blank">衡阳Log日志页面(9101)</a>
+            <a class="item" href="http://120.76.229.53/9004/" target="_blank">其它Log日志页面(9004)</a>
+        </div>
+    </div>
+    <div class="box">
+        <div class="box-title"><img src="./image/famen.png" alt="">南方阀门</div>
+        <div class="box-content">
+            <a class="item" href="http://182.61.56.51:5006/user/login/nffm" target="_blank">南方阀门数据平台</a>
+        </div>
+    </div>
+    <div class="box">
+        <div class="box-title"><img src="./image/lora.png" alt="">Lora平台</div>
+        <div class="box-content">
+            <a class="item" href="http://182.61.56.51:6001/user/login/zh" target="_blank">珠华</a>
+            <a class="item" href="http://182.61.56.51:6001/user/login/amwares" target="_blank">辂轺测试</a>
+            <a class="item" href="http://182.61.56.51:6001/user/login/test" target="_blank">珠华测试</a>
+        </div>
+    </div>
+    <div class="box">
+        <div class="box-title"><img src="./image/fenxiao.png" alt="">乘易</div>
+        <div class="box-content">
+            <a class="item" href="http://admin.gzchengyi.net/user/login" target="_blank">乘易分销管理系统</a>
+        </div>
+    </div>
+</div>
 </body>
 <script>
     var xhr;
-    if(window.XMLHttpRequest){
+    if (window.XMLHttpRequest) {
         xhr = new XMLHttpRequest();
-    }else{
+    } else {
         xhr = new ActiveXObject('Microsoft.XMLHTTP');
     }
-    xhr.onreadystatechange = function(){
-        if(xhr.readyState == 4){
-            if(xhr.status == 200){
-                var response=JSON.parse(xhr.responseText)
-                console.log('response',response)
-                var waterBox=document.querySelector('#water')
-                for(var i=0;i<response.data.length;i++){
-                    if(response.data[i].code==='system'){
-                        console.log('系统')
-                        return
-                    }else{
-                        var createA=document.createElement('a');
-                        var text=document.createTextNode(response.data[i].name);
-                        createA.className='item';
-                        if(['hy','sj_test','hz_test','wm_test','sc_test','hz_test_8409','wm_test_8410','sc_test_8411'].indexOf(response.data[i].code)>=0){
-                            createA.href='http://124.228.9.126:8000/water/#/login/'+response.data[i].code
-                        }else{
-                            createA.href='http://182.61.56.51:3004/#/login/'+response.data[i].code
-                        }
-
-                        createA.target='_blank'
-                        createA.appendChild(text);
-                        waterBox.appendChild(createA);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                var response = JSON.parse(xhr.responseText)
+                console.log('response', response)
+                var waterBox = document.querySelector('#water')
+                for (var i = 0; i < response.data.length; i++) {
+                    var createA = document.createElement('a');
+                    var text = document.createTextNode(response.data[i].name);
+                    createA.className = 'item';
+                    if (['hy', 'sj_test', 'hz_test', 'wm_test', 'sc_test', 'hz_test_8409', 'wm_test_8410', 'sc_test_8411'].indexOf(response.data[i].code) >= 0) {
+                        createA.href = 'http://124.228.9.126:8000/water/#/login/' + response.data[i].code
+                    } else {
+                        createA.href = 'http://182.61.56.51:3004/#/login/' + response.data[i].code
                     }
 
+                    createA.target = '_blank'
+                    createA.appendChild(text);
+                    waterBox.appendChild(createA);
+
                 }
+                var hyArr = [
+                    {code:'hy',name:'衡阳水务远传水表监控系统'},
+                    {code:'sj_test',name:'衡阳水务远传水表测试平台(sj_test)'},
+                    {code:'hz_test',name:'衡阳水务远传水表测试平台(hz_test)'},
+                    {code:'wm_test',name:'衡阳水务远传水表测试平台(wm_test)'},
+                    {code:'hz_test_8409',name:'衡阳水务远传水表测试平台(hz_test_8409)'},
+                    {code:'wm_test_8410',name:'衡阳水务远传水表测试平台(wm_test_8410)'},
+                    {code:'sc_test_8411',name:'衡阳水务远传水表测试平台(sc_test_8411)'},
+];
+                for (var i = 0; i < hyArr.length; i++) {
+                    var createA = document.createElement('a');
+                    var text = document.createTextNode(hyArr[i].name);
+                    createA.className = 'item';
+                    createA.href = 'http://124.228.9.126:8000/water/#/login/' + hyArr[i].code
+
+                    createA.target = '_blank'
+                    createA.appendChild(text);
+                    waterBox.appendChild(createA);
+
+                }
+
+
             }
         }
     }
     //发送请求
-    xhr.open('get','http://182.61.56.51/available_companies',true);
+    xhr.open('get', 'http://182.61.56.51/available_companies', true);
     xhr.send();
     //同步接受响应
 
